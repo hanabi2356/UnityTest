@@ -11,29 +11,27 @@ public class movetest : MonoBehaviour
         
     }
 
-    
-    void Update()
+    private void FixedUpdate()
     {
         float xx = Input.GetAxis("Horizontal");
         float zz = Input.GetAxis("Vertical");
 
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        /*Debug.Log(xx);*/
-       /* Vector3 temppos = transform.position;
-        temppos.x += xx * moveSpeed * Time.deltaTime;
-        temppos.z += zz * moveSpeed * Time.deltaTime;
 
-        transform.position = temppos;*/
+        transform.position += new Vector3(xx, 0.0f, zz) * moveSpeed*Time.fixedDeltaTime;
 
-        transform.position += new Vector3(xx, 0.0f, zz)* Time.deltaTime* moveSpeed;
-        if(Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer) )
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
         {
-            Debug.Log("rayHit\n");
             Vector3 lookDir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            Debug.Log(lookDir);
             transform.LookAt(lookDir);
         }
+    }
+
+
+    void Update()
+    {
+       
         
     }
 }
